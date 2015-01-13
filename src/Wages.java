@@ -102,9 +102,66 @@ class SalesManager extends SalesPerson implements ManagerInterface {
    }
 }
 
+class EmployeeList {
+   // declare two lists that will be maintained together
+   // allows for easy lookup based on name
+   ArrayList<Employee> lst = new ArrayList<Employee>();
+   ArrayList<String> nameList = new ArrayList<String>();
+
+   void enqueue(Employee e) {
+      lst.add(e);
+      nameList.add(e.name);
+   }
+
+   Employee find (String nm) {
+      Integer index = nameList.indexOf(nm);
+      if (index == -1) return null;
+
+      return lst.get(index);
+   }
+
+   void setHours(String nm, double hrs) {
+      // find the employee to add the hours to
+      Employee e = this.find(nm);
+      if (e == null) return;
+
+      e.setHours(hrs);
+   }
+
+   void setSales(String nm, double sales) {
+      // find the employee to add the sales to
+      Employee e = this.find(nm);
+      if (e == null) return;
+
+      e.setSales(sales);
+   }
+
+   void setSalary(String nm, double salary) {
+      // find the employee to add the salary to
+      Employee e = this.find(nm);
+      if (e == null) return;
+
+      e.setSalary(salary);
+   }
+
+   void display() {
+      for (Employee e : this.lst) {
+         e.display();
+      }
+   }
+
+   double payroll() {
+      double totalPay = 0;
+      for (Employee e : this.lst) {
+         totalPay += e.computePay();
+      }
+
+      return totalPay;
+   }
+}
+
 public class Wages {
    public static void main(String argv[]) {
-      /***
       EmployeeList emp = new EmployeeList();
       emp.enqueue(new SalesManager("Gee", 1000));
       emp.enqueue(new SalesManager("Gal", 1000));
@@ -133,6 +190,5 @@ public class Wages {
       emp.setSalary("Gem", 3000);
       emp.display();
       System.out.println("Payroll: "+emp.payroll());
-      ***/
    }
 }
