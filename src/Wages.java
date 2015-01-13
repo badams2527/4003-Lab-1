@@ -1,4 +1,3 @@
-import java.io.*;
 import java.util.*;
 
 abstract class Employee {
@@ -105,19 +104,22 @@ class SalesManager extends SalesPerson implements ManagerInterface {
 class EmployeeList {
    // declare two lists that will be maintained together
    // allows for easy lookup based on name
-   ArrayList<Employee> lst = new ArrayList<Employee>();
-   ArrayList<String> nameList = new ArrayList<String>();
+   private ArrayList<Employee> employees = new ArrayList<Employee>();
+   private ArrayList<String> names = new ArrayList<String>();
 
    void enqueue(Employee e) {
-      lst.add(e);
-      nameList.add(e.name);
+      // add Employee to employee list and add name to name list
+      employees.add(e);
+      names.add(e.name);
    }
 
    Employee find (String nm) {
-      Integer index = nameList.indexOf(nm);
+      // find the employee name in the name list, which corresponds to
+      // the employee in the employee list
+      Integer index = names.indexOf(nm);
       if (index == -1) return null;
 
-      return lst.get(index);
+      return employees.get(index);
    }
 
    void setHours(String nm, double hrs) {
@@ -145,14 +147,16 @@ class EmployeeList {
    }
 
    void display() {
-      for (Employee e : this.lst) {
+      // call the display function for each Employee
+      for (Employee e : this.employees) {
          e.display();
       }
    }
 
    double payroll() {
+      // sum each employees pay
       double totalPay = 0;
-      for (Employee e : this.lst) {
+      for (Employee e : this.employees) {
          totalPay += e.computePay();
       }
 
