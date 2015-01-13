@@ -102,24 +102,17 @@ class SalesManager extends SalesPerson implements ManagerInterface {
 }
 
 class EmployeeList {
-   // declare two lists that will be maintained together
-   // allows for easy lookup based on name
-   private ArrayList<Employee> employees = new ArrayList<Employee>();
-   private ArrayList<String> names = new ArrayList<String>();
+   // use hashmap for easy lookup by name
+   private LinkedHashMap<String, Employee> employees = new LinkedHashMap<String, Employee>();
 
    void enqueue(Employee e) {
-      // add Employee to employee list and add name to name list
-      employees.add(e);
-      names.add(e.name);
+      // add new record to hashmap
+      employees.put(e.name, e);
    }
 
    Employee find (String nm) {
-      // find the employee name in the name list, which corresponds to
-      // the employee in the employee list
-      Integer index = names.indexOf(nm);
-      if (index == -1) return null;
-
-      return employees.get(index);
+      // find the employee in the hashmap, return null if it's not there
+      return employees.get(nm);
    }
 
    void setHours(String nm, double hrs) {
@@ -148,7 +141,7 @@ class EmployeeList {
 
    void display() {
       // call the display function for each Employee
-      for (Employee e : this.employees) {
+      for (Employee e : this.employees.values()) {
          e.display();
       }
    }
@@ -156,7 +149,7 @@ class EmployeeList {
    double payroll() {
       // sum each employees pay
       double totalPay = 0;
-      for (Employee e : this.employees) {
+      for (Employee e : this.employees.values()) {
          totalPay += e.computePay();
       }
 
