@@ -25,20 +25,24 @@ class Monitor {
     public synchronized void ping (Monitor p) throws InterruptedException {
         System.out.println(this.name + " (ping): pinging " + p.getName());
 
-        if (p.isWaiting()) {
+        // Check if the other monitor is waiting
+        if (p.isWaiting()) { // it's waiting so we release it so it can confirm
             this.release(p);
         }
 
+        // Set flag so the other monitor will know I'm waiting
         this.waiting = true;
         synchronized (this) {
-            this.wait();
+            this.wait(); // make this thread wait so the other can continue execution
         }
         //this.waiting = false;
 
         System.out.println(this.name + " (ping): asking " + p.getName() + " to confirm");
-        p.confirm(this);
+        p.confirm(this); // reply to the other thread
+                         // It's waiting, so this thread continues to execute
         System.out.println(this.name + " (ping): got confirmation");
 
+        // Let the other thread know it can continue execution while this thread waits
         if (p.isWaiting()) {
             this.release(p);
         }
@@ -49,6 +53,7 @@ class Monitor {
     }
 
     public synchronized void release (Monitor p) {
+        // notify the other thread to run again
         synchronized (p) {
             p.notify();
         }
