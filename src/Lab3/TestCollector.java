@@ -1,3 +1,5 @@
+package Lab3;
+
 import java.applet.*;
 import javax.swing.*;
 import java.awt.*;

@@ -1,3 +1,5 @@
+package Lab3;
+
 public abstract class Stream extends Thread {
    Object value;
    

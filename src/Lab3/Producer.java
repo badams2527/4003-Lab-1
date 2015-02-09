@@ -1,3 +1,5 @@
+package Lab3;
+
 import java.util.*;
 
 public class Producer extends Stream {
@@ -14,15 +16,15 @@ public class Producer extends Stream {
    }
 
    public void run () {
-      while (flag) {
-	 int sleep_time = (int)(Math.random()*3000);
-	 double stock_value = Math.random()*111;
-	 stock_value = (Math.floor(stock_value*100))/100.0;
-	 try { sleep(sleep_time); } catch (Exception e) {}
-	 f.area.append("Producer "+ident+" puts subscriber with value="+
-			    stock_value+"\n");
-	 putIt(new Subscriber(count++, stock_value, this));
-	 f.area.append("Producer "+ident+" returns from put\n");
+       while (flag) {
+         int sleep_time = (int)(Math.random()*3000);
+         double stock_value = Math.random()*111;
+         stock_value = (Math.floor(stock_value*100))/100.0;
+         try { sleep(sleep_time); } catch (Exception e) {}
+         f.area.append("Producer "+ident+" puts subscriber with value="+
+                    stock_value+"\n");
+         putIt(new Subscriber(count++, stock_value, this));
+         f.area.append("Producer "+ident+" returns from put\n");
       }
    }
 }

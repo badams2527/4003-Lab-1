@@ -1,3 +1,5 @@
+package Lab1;
+
 import java.util.*;
 
 abstract class Employee {
@@ -84,7 +86,7 @@ class SalesManager extends SalesPerson implements ManagerInterface {
    }
 	
    double computePay() {
-      System.out.println("SalesManager: " + name + " " +
+      System.out.println("Lab1.SalesManager: " + name + " " +
 			 super.computePay()+managerComputePay());
       return super.computePay() + managerComputePay();
    }
@@ -140,7 +142,7 @@ class EmployeeList {
    }
 
    void display() {
-      // call the display function for each Employee
+      // call the display function for each Lab1.Employee
       for (Employee e : this.employees.values()) {
          e.display();
       }

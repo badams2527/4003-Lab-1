@@ -1,3 +1,5 @@
+package Lab3;
+
 public class Notifier extends Stream {
    IntObject value;
    TCFrame f;
