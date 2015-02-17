@@ -39,7 +39,7 @@ class Sender {
       }
 
       try {
-         Socket socket = new Socket("localhost", 8670);
+         Socket socket = new Socket("localhost", 8671);
          InputStream ins = socket.getInputStream();
          in  = new BufferedReader(new InputStreamReader(ins));
          out = new ObjectOutputStream(socket.getOutputStream());

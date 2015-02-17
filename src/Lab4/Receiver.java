@@ -37,7 +37,7 @@ class GetClass extends ClassLoader implements Runnable {
    public void run () {
       byte [] classbytes = null;
       try {
-         ServerSocket server = new ServerSocket(8670);
+         ServerSocket server = new ServerSocket(8671);
          while (true) {
             try {
                Socket socket = server.accept();
@@ -93,6 +93,8 @@ public class Receiver extends JFrame implements ActionListener {
    JTextField status = null;
    GetClass gc = null;
    JLabel label;
+   JTextField txtWidth = null;
+   JTextField txtHeight = null;
 
    public Receiver () {
       setLayout(new BorderLayout());
@@ -101,7 +103,10 @@ public class Receiver extends JFrame implements ActionListener {
       p.add(label = new JLabel("Receiver"));
       p.add(new JLabel("         "));
       p.add(b = new JButton("Start the Applet"));
-      add("North",p);
+      p.add(new JLabel(" H, W: "));
+      p.add(txtHeight = new JTextField("Height"));
+      p.add(txtWidth = new JTextField("Width"));
+      add("North", p);
       add("South",status = new JTextField());
       status.setEditable(false);
       b.addActionListener(this);
@@ -116,6 +121,13 @@ public class Receiver extends JFrame implements ActionListener {
          if (evt.getSource() == b) {
             status.setText("Invoking init");
             gc.meth.invoke(gc.obj);
+
+            // set the size/width
+            Class<?> frame = gc.cls.getSuperclass();
+            Method size = frame.getMethod("setSize", new Class<?> [] {Integer.TYPE, Integer.TYPE});
+            Method vis = frame.getMethod("setVisible", new Class<?> [] {Boolean.TYPE});
+            size.invoke(gc.obj, new Object [] {Integer.parseInt(txtWidth.getText()), Integer.parseInt(txtHeight.getText())});
+            vis.invoke(gc.obj, new Object[] {true});
          }
       } catch (Exception e) {
          status.setText(e.toString());
