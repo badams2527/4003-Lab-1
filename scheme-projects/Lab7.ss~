@@ -30,17 +30,16 @@
     (let ((temp (demand)))
       (if (null? temp) '() (cons temp (demand-tokens))))))
 
-(define main
-  (lambda (l1 l2 l3)
+(define plcc
+  (lambda ()
     (call/cc
-     (lambda (c1)
-       (display (car l1))
-       (c1 (cdr l1))))
-    (call/cc
-     (lambda (c2)
-       (display (car l2))
-       (c2 (cdr l2))))
-    (call/cc
-     (lambda (c3)
-       (display (car l3))
-       (c3 (cdr l3))))))
+      (lambda (l1 l2 l3)
+        (call/cc
+          (lambda (l1)
+            (car l1)))
+        (call/cc
+          (lambda (l2)
+            (car l2)))
+        (call/cc
+          (lambda (l3)
+            (car l3)))))))
