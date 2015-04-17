@@ -8,5 +8,5 @@ merge (e1:l1) (e2:l2) = if e1 < e2 then
 
 times x l = [x*e | e <- l]
 
-hamming [] = []
-hamming l = (head l):(merge (times (head l) (hamming l)) (hamming (tail l)))
+ham [] = []
+ham l = (head l):(merge (times (head l) (ham l)) (ham (tail l)))
