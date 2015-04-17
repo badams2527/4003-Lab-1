@@ -32,11 +32,11 @@ srt (a:[]) = [a]
 srt x = mrg (srt (splite x)) (srt (splito x))
 
 displayList :: (Fractional t, Ord t) => [([Char], t, t)] -> [([Char], t, t)]
-displayList lst = [(name, v, u) | (name, v, u) <- drop 1 lst, v > 0]
+displayList lst = lst {-[(name, v, u) | (name, v, u) <- drop 1 lst, v > 0]-}
 
-knapsack :: (Fractional t, Ord t) => [([Char], t, t)] -> t -> [([Char], t, t)]
+knapsack :: (Fractional t, Ord t) => [([Char], t, t)] -> t -> [([Char], t, t )]
 knapsack lst w = 
-  let ans = ("Start", w, 0):[ (name, (v-u), if (u < v-u) then u; else v)
+  let ans = ("Start", w, 0):[ (name, if (v < u) then r*v; else v-u, if (u < v-u) then u; else v)
                           | (name, r, u) <- srt (manip lst)
                           | (crss, v, p) <- ans]
   in displayList (ans)
